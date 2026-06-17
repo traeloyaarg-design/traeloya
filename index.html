@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Traelo Ya — Importamos lo que necesitás</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bordo:      #6B1A2A;
+      --bordo-dk:   #4A0F1C;
+      --bordo-lt:   #8C2438;
+      --crema:      #F5EFE0;
+      --crema-dk:   #E8DDCA;
+      --crema-lt:   #FAF6EE;
+      --blanco:     #FFFFFF;
+      --texto:      #2A0A11;
+      --muted:      #9C7A7A;
+      --display:    'Playfair Display', Georgia, serif;
+      --body:       'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--crema-lt);
+      color: var(--texto);
+      font-family: var(--body);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 5%;
+      background: rgba(245,239,224,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(107,26,42,0.12);
+    }
+    .logo {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--bordo);
+      letter-spacing: -0.01em;
+    }
+    .logo span { color: var(--bordo-lt); }
+    nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
+    nav ul a {
+      text-decoration: none;
+      color: var(--texto);
+      font-size: 0.84rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--bordo); }
+    .nav-cta {
+      background: var(--bordo) !important;
+      color: var(--crema) !important;
+      padding: .5rem 1.3rem;
+      border-radius: 3px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--bordo-dk) !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: var(--bordo-dk);
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start;
+      padding: 10rem 5% 5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-texture {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23F5EFE0' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-glow {
+      position: absolute;
+      right: -10%; top: 10%;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(140,36,56,0.35) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      position: relative;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--crema-dk);
+      margin-bottom: 1.4rem;
+      display: flex; align-items: center; gap: .8rem;
+      opacity: 0.7;
+    }
+    .eyebrow::before {
+      content: '';
+      display: block; width: 28px; height: 1px;
+      background: var(--crema-dk);
+    }
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(2.8rem, 6.5vw, 5.6rem);
+      font-weight: 900;
+      line-height: 1.02;
+      color: var(--crema);
+      max-width: 780px;
+      margin-bottom: 1.6rem;
+      position: relative;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--crema-dk);
+      opacity: 0.75;
+    }
+    .hero-sub {
+      position: relative;
+      font-size: clamp(.95rem, 1.3vw, 1.1rem);
+      font-weight: 300;
+      line-height: 1.75;
+      max-width: 500px;
+      color: rgba(245,239,224,0.72);
+      margin-bottom: 2.8rem;
+    }
+    .btns { position: relative; display: flex; flex-wrap: wrap; gap: .9rem; }
+    .btn-primary {
+      display: inline-block;
+      background: var(--crema);
+      color: var(--bordo-dk);
+      font-family: var(--body);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      padding: .95rem 2.2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--crema-lt); transform: translateY(-2px); }
+    .btn-ghost {
+      display: inline-block;
+      border: 1.5px solid rgba(245,239,224,0.3);
+      color: var(--crema);
+      font-family: var(--body);
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      padding: .95rem 2.2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color: var(--crema); }
+    .hero-stats {
+      position: relative;
+      margin-top: 4.5rem;
+      display: flex; gap: 3.5rem;
+      border-top: 1px solid rgba(245,239,224,0.12);
+      padding-top: 2rem;
+    }
+    .stat-num {
+      font-family: var(--display);
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: var(--crema);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245,239,224,0.5);
+      margin-top: .3rem;
+    }
+
+    /* ── SECCIONES BASE ── */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--bordo);
+      margin-bottom: .7rem;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+      font-weight: 900;
+      line-height: 1.12;
+      color: var(--bordo-dk);
+      max-width: 580px;
+    }
+
+    /* ── SERVICIOS ── */
+    #servicios {
+      padding: 7rem 5%;
+      background: var(--crema);
+    }
+    #servicios .section-title { margin-bottom: 3.5rem; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.3rem;
+    }
+    .card {
+      background: var(--crema-lt);
+      border: 1px solid rgba(107,26,42,0.1);
+      border-radius: 6px;
+      padding: 2rem 1.8rem;
+      transition: border-color .25s, transform .2s, box-shadow .2s;
+    }
+    .card:hover {
+      border-color: var(--bordo-lt);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(107,26,42,0.1);
+    }
+    .card-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+    .card h3 {
+      font-family: var(--display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--bordo-dk);
+      margin-bottom: .6rem;
+    }
+    .card p { font-size: 0.87rem; line-height: 1.7; color: #5A3A3A; }
+
+    /* ── CÓMO FUNCIONA ── */
+    #proceso {
+      padding: 7rem 5%;
+      background: var(--bordo);
+    }
+    #proceso .section-label { color: var(--crema-dk); opacity: .6; }
+    #proceso .section-title { color: var(--crema); margin-bottom: 3.5rem; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2.5rem;
+    }
+    .step-num {
+      font-family: var(--display);
+      font-size: 3.8rem;
+      font-weight: 900;
+      color: rgba(245,239,224,0.1);
+      line-height: 1;
+      margin-bottom: .5rem;
+    }
+    .step h3 {
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--crema-dk);
+      margin-bottom: .5rem;
+    }
+    .step p { font-size: 0.86rem; line-height: 1.7; color: rgba(245,239,224,0.6); }
+
+    /* ── NOSOTROS ── */
+    #nosotros {
+      padding: 7rem 5%;
+      background: var(--crema-lt);
+      display: flex; flex-wrap: wrap; gap: 5rem; align-items: center;
+    }
+    .nosotros-text { flex: 1 1 320px; }
+    .nosotros-text .section-title { margin-bottom: 1.4rem; }
+    .nosotros-text p {
+      font-size: .95rem; line-height: 1.8; color: #5A3A3A; margin-bottom: 1rem;
+    }
+    .nosotros-list { flex: 1 1 260px; }
+    .feature-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(107,26,42,0.08);
+    }
+    .feature-item:last-child { border-bottom: none; margin-bottom: 0; }
+    .feature-dot {
+      flex-shrink: 0;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--bordo);
+      margin-top: .5rem;
+    }
+    .feature-item strong {
+      display: block;
+      font-weight: 600;
+      color: var(--bordo-dk);
+      margin-bottom: .2rem;
+      font-size: .92rem;
+    }
+    .feature-item p { font-size: .87rem; line-height: 1.65; color: #5A3A3A; }
+
+    /* ── CONTACTO ── */
+    #contacto {
+      padding: 7rem 5%;
+      background: var(--crema);
+    }
+    #contacto .section-title { margin-bottom: 3rem; }
+    .contact-wrap {
+      display: flex; flex-wrap: wrap; gap: 5rem; align-items: flex-start;
+    }
+    .contact-info { flex: 1 1 240px; }
+    .contact-info p {
+      font-size: .92rem; line-height: 1.75; color: #5A3A3A; margin-bottom: 2rem;
+    }
+    .contact-link {
+      display: flex; align-items: center; gap: .8rem;
+      text-decoration: none;
+      color: var(--texto);
+      font-size: .88rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      transition: color .2s;
+    }
+    .contact-link:hover { color: var(--bordo); }
+    .contact-link span { font-size: 1rem; }
+    .contact-form { flex: 1 1 320px; }
+    .form-row { margin-bottom: 1.1rem; }
+    .form-row label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bordo);
+      margin-bottom: .4rem;
+    }
+    .form-row input,
+    .form-row textarea,
+    .form-row select {
+      width: 100%;
+      background: var(--crema-lt);
+      border: 1.5px solid rgba(107,26,42,0.18);
+      border-radius: 3px;
+      padding: .75rem 1rem;
+      color: var(--texto);
+      font-family: var(--body);
+      font-size: .9rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-row input:focus,
+    .form-row textarea:focus,
+    .form-row select:focus { border-color: var(--bordo); }
+    .form-row textarea { resize: vertical; min-height: 130px; }
+    .form-row select option { background: var(--crema-lt); }
+    .form-submit {
+      background: var(--bordo);
+      color: var(--crema);
+      border: none;
+      border-radius: 3px;
+      font-family: var(--body);
+      font-weight: 700;
+      font-size: .9rem;
+      letter-spacing: 0.06em;
+      padding: 1rem 2.5rem;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+      width: 100%;
+      margin-top: .5rem;
+    }
+    .form-submit:hover { background: var(--bordo-dk); transform: translateY(-2px); }
+
+    /* ── DIVIDER ── */
+    .rule {
+      height: 1px;
+      background: rgba(107,26,42,0.1);
+      margin: 0 5%;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bordo-dk);
+      padding: 2rem 5%;
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center; gap: 1rem;
+    }
+    footer .logo { color: var(--crema); font-size: 1.2rem; }
+    footer p { font-size: .77rem; color: rgba(245,239,224,0.4); }
+
+    @media (max-width: 640px) {
+      nav ul { display: none; }
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Traelo<span>Ya</span></div>
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#proceso">Cómo funciona</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#contacto" class="nav-cta">Contactanos</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-texture"></div>
+    <div class="hero-glow"></div>
+    <p class="eyebrow">Importaciones internacionales</p>
+    <h1>Importamos<br><em>lo que necesitás,</em><br>desde donde sea.</h1>
+    <p class="hero-sub">
+      ¿Encontraste algo en el exterior y no sabés cómo traerlo? En Traelo Ya nos encargamos de todo: desde la búsqueda hasta la entrega en tu puerta.
+    </p>
+    <div class="btns">
+      <a href="#contacto" class="btn-primary">Cotizá sin cargo</a>
+      <a href="#proceso" class="btn-ghost">Ver cómo funciona</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">+50</div>
+        <div class="stat-label">Países de origen</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Legal y en regla</div>
+      </div>
+      <div>
+        <div class="stat-num">24hs</div>
+        <div class="stat-label">Respuesta garantizada</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <section id="servicios">
+    <p class="section-label">Lo que hacemos</p>
+    <h2 class="section-title">Un servicio completo de importación, sin complicaciones.</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h3>Búsqueda de proveedores</h3>
+        <p>Encontramos el proveedor ideal en China, EE.UU., Europa o cualquier otro origen, con control de calidad incluido.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📦</div>
+        <h3>Gestión aduanera</h3>
+        <p>Nos encargamos de toda la documentación, aranceles y trámites de importación para que vos no tengas que preocuparte.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚢</div>
+        <h3>Logística internacional</h3>
+        <p>Coordinamos el transporte marítimo, aéreo o terrestre según lo que necesités, con seguimiento en tiempo real.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🛡️</div>
+        <h3>Asesoría y consultoría</h3>
+        <p>Te hacemos el análisis de costos, aranceles y márgenes antes de que inviertas un peso.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏭</div>
+        <h3>Importación para empresas</h3>
+        <p>Soluciones a medida para pymes y empresas que necesitan abastecerse del exterior de forma regular y eficiente.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🛒</div>
+        <h3>Compras personales</h3>
+        <p>¿Querés algo que no se consigue acá? Lo buscamos, lo compramos y te lo traemos. Así de simple.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <section id="proceso">
+    <p class="section-label">Proceso</p>
+    <h2 class="section-title">De tu consulta a tu puerta, en cuatro pasos.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Nos contás qué necesitás</h3>
+        <p>Mandanos tu consulta por WhatsApp, mail o el formulario de contacto. Sin compromiso.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Te enviamos una cotización</h3>
+        <p>En menos de 24 horas tenés un presupuesto detallado: producto, flete, aranceles y honorarios.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Gestionamos todo</h3>
+        <p>Una vez que aprobás, nosotros nos encargamos de la compra, el envío y todos los trámites.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Recibís tu producto</h3>
+        <p>Tu mercadería llega despachada, en regla y lista para usar o vender.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule" style="background:rgba(245,239,224,0.1); margin:0;"></div>
+
+  <section id="nosotros">
+    <div class="nosotros-text">
+      <p class="section-label">Por qué Traelo Ya</p>
+      <h2 class="section-title">Somos el puente entre el mundo y tu negocio.</h2>
+      <p>Importar puede parecer complicado: regulaciones, proveedores desconocidos, logística internacional. Por eso nuestro trabajo es que todo eso deje de ser tu problema.</p>
+      <p>Trabajamos con profesionales en comercio exterior que conocen los mercados, los tiempos y los costos reales. Sin sorpresas, sin letra chica.</p>
+    </div>
+    <div class="nosotros-list">
+      <div class="feature-item">
+        <div class="feature-dot"></div>
+        <p><strong>Transparencia total</strong>Te mostramos cada costo antes de arrancar. Nada escondido.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-dot"></div>
+        <p><strong>Equipo especializado</strong>Profesionales en comercio exterior con experiencia en aduanas y mercados internacionales.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-dot"></div>
+        <p><strong>Respuesta rápida</strong>Contestamos dentro de las 24 horas hábiles. Siempre.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-dot"></div>
+        <p><strong>Cualquier producto, cualquier origen</strong>Si existe y se puede importar legalmente, lo traemos.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <section id="contacto">
+    <p class="section-label">Contacto</p>
+    <h2 class="section-title">Contanos qué necesitás y nos ocupamos nosotros.</h2>
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <p>Mandanos tu consulta y en menos de 24 horas te respondemos con una cotización sin costo ni compromiso.</p>
+        <a href="https://wa.me/541124989454" target="_blank" class="contact-link">
+          <span>💬</span> WhatsApp
+        </a>
+        <a href="mailto:trealoyaarg@gmail.com" class="contact-link">
+          <span>✉️</span> trealoyaarg@gmail.com
+        </a>
+        <a href="https://www.instagram.com/traeloyaaa/" target="_blank" class="contact-link">
+          <span>📷</span> @traeloyaaa
+        </a>
+      </div>
+      <form class="contact-form" action="https://formspree.io/f/mlgkvyvj" method="POST">
+        <div class="form-row">
+          <label>Tu nombre</label>
+          <input type="text" name="nombre" placeholder="¿Cómo te llamás?" required />
+        </div>
+        <div class="form-row">
+          <label>Correo electrónico</label>
+          <input type="email" name="email" placeholder="tu@email.com" required />
+        </div>
+        <div class="form-row">
+          <label>¿Qué querés importar?</label>
+          <select name="categoria">
+            <option value="">Seleccioná una categoría</option>
+            <option>Tecnología y electrónica</option>
+            <option>Indumentaria y textiles</option>
+            <option>Maquinaria e insumos industriales</option>
+            <option>Cosmética y cuidado personal</option>
+            <option>Artículos del hogar</option>
+            <option>Alimentos y bebidas</option>
+            <option>Otro / No sé bien</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Contanos más</label>
+          <textarea name="mensaje" placeholder="¿Desde dónde lo querés traer? ¿Cuántas unidades? Cuanto más detalle nos des, mejor podemos cotizarte."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Enviar consulta →</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="logo">Traelo<span style="opacity:.6">Ya</span></div>
+    <p>© 2025 Traelo Ya. Todos los derechos reservados.</p>
+    <p>Argentina · Paraguay · Uruguay</p>
+  </footer>
+
+</body>
+</html>
